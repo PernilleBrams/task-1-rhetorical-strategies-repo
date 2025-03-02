@@ -174,9 +174,9 @@ st.markdown("3) Når der ikke er mere relevant at markere i den viste tekst, så
 #st.markdown("__")
 st.markdown("**✅ Tips:**")
 st.markdown("""
-    - Hvis du fortryder en annotation, kan du klikke på markeringen og trykke **slet** / **delete** på dit tastatur.  
-    - Hvis du vil have en pause, kan du logge ud på log-ud knappen til venstre og vende tilbage senere og starte, hvor du slap.  
-    - Du optjener flere lod i lotteriet per færdiggjort annotations-runde.
+- Hvis du fortryder en annotation, kan du klikke på markeringen og trykke **slet** / **delete** på dit tastatur.  
+- Hvis du vil have en pause, kan du logge ud på log-ud knappen til venstre og vende tilbage senere og starte, hvor du slap.  
+- Du optjener flere lod i lotteriet per færdiggjort annotations-runde.
     
 *Har du nogle spørgsmål? Skriv til mig (Pernille) på au650502@uni.au.dk* 🌞
 """)
