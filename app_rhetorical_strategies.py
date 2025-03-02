@@ -25,13 +25,6 @@ st.markdown(
     .label-class[data-label="Afledning"] { background-color: #9c27b0 !important; color: white !important; } /* Purple */
     .label-class[data-label="Svar"] { background-color: #28a745 !important; color: white !important; } /* Green */
     .label-class[data-label="Andet"] { background-color: #6c757d !important; color: white !important; } /* Gray */
-    
-    /* Optional: Slightly rounded corners for better UI */
-    .label-class {
-        border-radius: 6px !important;
-        padding: 4px 8px !important;
-        font-weight: bold !important;
-    }
     </style>
     """,
     unsafe_allow_html=True
