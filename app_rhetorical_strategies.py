@@ -171,10 +171,11 @@ st.markdown("##### Sådan bruges siden:")
 st.markdown("1) **Vælg en label** (Overdrivelse, Undvigelse, Udeladelse, Afledning, Svar (hvis ingen strategi bruges, men et reelt svar gives) og Andet), **markér tekst**, og tryk på **den blå update-knap** for at gemme dem.")
 st.markdown("2) Gentag trin 1 så mange gange, du føler er nødvendigt.")
 st.markdown("3) Når der ikke er mere relevant at markere i den viste tekst, så tryk på **Gem annotation**-knappen i bunden af siden for at gemme *alle* svar og gå videre til den næste dialog.")
+st.markdown("__")
 st.markdown("""
-- Hvis du fortryder en annotation, kan du klikke på markeringen og trykke **slet** / **delete** på dit tastatur.  
-- Hvis du vil have en pause, kan du logge ud på log-ud knappen til venstre og vende tilbage senere og starte, hvor du slap.  
-- Du optjener flere lod i lotteriet per færdiggjort annotations-runde.
+    - Hvis du fortryder en annotation, kan du klikke på markeringen og trykke **slet** / **delete** på dit tastatur.  
+    - Hvis du vil have en pause, kan du logge ud på log-ud knappen til venstre og vende tilbage senere og starte, hvor du slap.  
+    - Du optjener flere lod i lotteriet per færdiggjort annotations-runde.
 """)
 
 # kommentarfelt under annotation boksen label-select, der gemmes som comment_text i sheetet
@@ -197,23 +198,6 @@ def bold_unicode(text):
 # Convert bold-marked text (**text**) into Unicode bold characters
 import re
 formatted_text = re.sub(r"\*\*(.*?)\*\*", lambda m: bold_unicode(m.group(1)), current_text)
-
-st.markdown(
-    """
-    <style>
-    /* Override Bootstrap colors for labels */
-    :root {
-        --primary: #007bff;  /* Blue for Overdrivelse */
-        --danger: #ff4d4f;   /* Red for Undvigelse */
-        --warning: #ffa500;  /* Orange for Udeladelse */
-        --purple: #9c27b0;   /* Purple for Afledning */
-        --success: #28a745;  /* Green for Svar */
-        --gray: #6c757d;     /* Gray for Andet */
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
 
 selections = label_select(
     body=formatted_text,
