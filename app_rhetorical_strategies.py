@@ -131,6 +131,18 @@ if len(unannotated_texts) == 0 or st.session_state.get("finished", False):
     
     st.stop()
 
+# ✅ If user has finished all texts, show completion message
+if st.session_state.text_index >= len(unannotated_texts):
+    st.session_state.finished = True
+    st.success("🎉 Du har annoteret alle tekster!")
+    st.info("✅ Du kan nu logge ud via knappen i sidebaren.")
+
+    if st.session_state.annotations:
+        threading.Thread(target=save_annotations, args=(user_id, st.session_state.annotations.copy()), daemon=True).start()
+        st.session_state.annotations = []
+
+    st.stop()
+
 # ✅ Get the next text properly
 current_text = unannotated_texts[st.session_state.text_index]
 
