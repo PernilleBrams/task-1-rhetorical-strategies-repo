@@ -184,7 +184,7 @@ st.markdown("""
 
 with st.expander("🔍 Se eksempler på labels (retoriske strategier)"):
     st.markdown("""
-#    ### **📌 Label**
+    ### **📌 Label**
     
     **Overdrivelse (Stretch)**  
     _Definition_: Når en politiker forstærker eller overdriver en påstand uden at give præcise beviser.  
