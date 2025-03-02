@@ -150,8 +150,16 @@ current_text = unannotated_texts[st.session_state.text_index]
 st.markdown("## Vælg en komponent, og marker tekst:")
 st.markdown("#### Du må gerne markere flere - der kan f.eks. være flere påstande end én i et tekststykke.")
 
+#selections = label_select(
+#    body=current_text,
+#    labels=["Stretch", "Dodge", "Omission", "Deflection"]
+#)
+
+# Convert Markdown-style bold (**text**) to HTML-style bold (<b>text</b>)
+formatted_text = current_text.replace("**", "<b>", 1).replace("**", "</b>", 1)
+
 selections = label_select(
-    body=current_text,
+    body=formatted_text,
     labels=["Stretch", "Dodge", "Omission", "Deflection"]
 )
 
