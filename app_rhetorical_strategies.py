@@ -166,16 +166,19 @@ current_text = unannotated_texts[st.session_state.text_index]
 
 # --- TEXT HIGHLIGHTING ---
 #st.markdown("## Retoriske strategier i politiske debatter")
-st.markdown("##Kan du identificere politikernes skjulte debatstrategier?")
+st.markdown("## Kan du identificere vores politikeres skjulte debatstrategier? 🏛️🤔🧑‍💻")
 st.markdown("##### Sådan bruges siden:")
-st.markdown("1) **Vælg en label** (Overdrivelse, Undvigelse, Udeladelse, Afledning, Svar (hvis ingen strategi bruges, men et reelt svar gives) og Andet), **markér tekst**, og tryk på **den blå update-knap** for at gemme dem.")
+st.markdown("1) **Vælg en label** (Overdrivelse, Undvigelse, Udeladelse, Afledning, Svar (hvis ingen strategi bruges, men et reelt svar gives) eller Andet), **markér en eller flere ytringer, der passer til den label**, og tryk på **den blå update-knap** for at gemme dem.")
 st.markdown("2) Gentag trin 1 så mange gange, du føler er nødvendigt.")
 st.markdown("3) Når der ikke er mere relevant at markere i den viste tekst, så tryk på **Gem annotation**-knappen i bunden af siden for at gemme *alle* svar og gå videre til den næste dialog.")
 st.markdown("__")
 st.markdown("""
+**✅ Tips:**
     - Hvis du fortryder en annotation, kan du klikke på markeringen og trykke **slet** / **delete** på dit tastatur.  
     - Hvis du vil have en pause, kan du logge ud på log-ud knappen til venstre og vende tilbage senere og starte, hvor du slap.  
     - Du optjener flere lod i lotteriet per færdiggjort annotations-runde.
+
+*Har du nogle spørgsmål? Skriv til mig (Pernille) på au650502@uni.au.dk* 🌞
 """)
 
 # kommentarfelt under annotation boksen label-select, der gemmes som comment_text i sheetet
