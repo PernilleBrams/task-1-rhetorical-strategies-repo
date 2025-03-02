@@ -182,37 +182,37 @@ st.markdown("""
 *Har du nogle spørgsmål? Skriv til mig (Pernille) på au650502@uni.au.dk* 🌞
 """)
 
-with st.expander("🔍 See examples of labels"):
+with st.expander("🔍 Se eksempler på labels (retoriske strategier)"):
     st.markdown("""
-    ### **📌 Label explanations & examples**
+#    ### **📌 Label**
     
-    **🟦 Overdrivelse (Stretch)**  
+    **Overdrivelse (Stretch)**  
     _Definition_: Når en politiker forstærker eller overdriver en påstand uden at give præcise beviser.  
-    _Example_: *"Danmark er det rigeste land i verden, alle andre er langt bagefter!"*  
+    _Eksempel_: *"Danmark er det rigeste land i verden, alle andre er langt bagefter!"*  
 
-    **🟥 Undvigelse (Dodge)**  
+    **Undvigelse (Dodge)**  
     _Definition_: Når en politiker undgår at svare direkte på et spørgsmål og i stedet taler udenom.  
-    _Example_:  
+    _Eksempel_:  
     - **Journalist**: *"Vil I hæve skatten?"*  
     - **Politiker**: *"Det vigtigste er, at vi sikrer en stærk økonomi for fremtiden."*  
 
-    **🟧 Udeladelse (Omission)**  
+    **Udeladelse (Omission)**  
     _Definition_: Når en vigtig del af informationen udelades for at ændre betydningen af et argument.  
-    _Example_: *"Vores regering har skabt 50.000 nye job!"* _(Men uden at nævne, at 60.000 er mistet.)_  
+    _Eksempel_: *"Vores regering har skabt 50.000 nye job!"* _(Men uden at nævne, at 60.000 er mistet.)_  
 
-    **🟪 Afledning (Deflection)**  
+    **Afledning (Deflection)**  
     _Definition_: Når en politiker ændrer emnet for at undgå at svare direkte på et kritisk spørgsmål.  
-    _Example_:  
+    _Eksempel_:  
     - **Journalist**: *"Har din regering fejlet med inflationen?"*  
     - **Politiker**: *"Lad os huske på, hvad oppositionen gjorde sidste gang de havde magten!"*  
 
-    **🟩 Svar (Answer)**  
+    **Svar (Answer)**  
     _Definition_: Når en politiker faktisk besvarer spørgsmålet direkte og uden strategisk manipulation.  
-    _Example_:  
+    _Eksempel_:  
     - **Journalist**: *"Vil I hæve skatten?"*  
     - **Politiker**: *"Ja, vi planlægger en mindre forhøjelse for at finansiere velfærd."*  
 
-    **⬜ Andet (Other)**  
+    **Andet (Other)**  
     _Definition_: Hvis en udtalelse ikke passer ind i de andre kategorier, men stadig er relevant.  
     """)
 
