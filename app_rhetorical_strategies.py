@@ -156,12 +156,29 @@ st.markdown("#### Du må gerne markere flere - der kan f.eks. være flere påsta
 #)
 
 # Convert Markdown-style bold (**text**) to HTML-style bold (<b>text</b>)
-formatted_text = current_text.replace("**", "<b>", 1).replace("**", "</b>", 1)
+# formatted_text = current_text.replace("**", "<b>", 1).replace("**", "</b>", 1)
+
+def bold_unicode(text):
+    """ Converts text to bold using Unicode Mathematical Bold Letters """
+    normal = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+    bold = "𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗥𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭𝗮𝗯𝗰𝗱𝗲𝗳𝗴𝗵𝗶𝗷𝗸𝗹𝗺𝗻𝗼𝗽𝗾𝗿𝘀𝘁𝘂𝘃𝘄𝘅𝘆𝘇"
+    trans = str.maketrans(normal, bold)
+    return text.translate(trans)
+
+# Convert bold-marked text (**text**) into Unicode bold characters
+import re
+formatted_text = re.sub(r"\*\*(.*?)\*\*", lambda m: bold_unicode(m.group(1)), current_text)
 
 selections = label_select(
     body=formatted_text,
     labels=["Stretch", "Dodge", "Omission", "Deflection"]
 )
+
+
+#selections = label_select(
+#    body=formatted_text,
+#    labels=["Stretch", "Dodge", "Omission", "Deflection"]
+#)
 
 # Convert selections to a list of dictionaries if needed
 selection_data = selections if isinstance(selections, list) else []
