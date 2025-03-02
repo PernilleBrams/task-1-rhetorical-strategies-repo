@@ -183,39 +183,43 @@ st.markdown("""
 """)
 #     ### **📌 Forklaring på retoriske strategier med eksmepler**
 
-with st.expander("🔍 Se eksempler på labels (retoriske strategier)"):
+with st.expander("🔍 Se eksempler på labels"):
     st.markdown("""
+    ### **📌 Label forklaringer & eksempler**
     
-    **⬆️ Overdrivelse (Stretch)**  
+    ⬆️ **Overdrivelse (Stretch)**  
     _Definition_: Når en politiker forstærker eller overdriver en påstand uden at give præcise beviser.  
-    _Eksempel_: *"Danmark er det rigeste land i verden, alle andre er langt bagefter!"*  
+    _Eksempel_:  
+    **Opponent**: *"Jeres politik har ført til stigende arbejdsløshed og økonomisk krise!"*  
+    **Proponent**: *"Tværtimod! Vi har skabt den største økonomiske vækst i historien!"*  
 
-    **↔️ Undvigelse (Dodge)**  
+    ↔️ **Undvigelse (Dodge)**  
     _Definition_: Når en politiker undgår at svare direkte på et spørgsmål og i stedet taler udenom.  
     _Eksempel_:  
-    - **Journalist**: *"Vil I hæve skatten?"*  
-    - **Politiker**: *"Det vigtigste er, at vi sikrer en stærk økonomi for fremtiden."*  
+    **Opponent**: *"Vil jeres parti hæve skatten?"*  
+    **Proponent**: *"Det vigtigste er, at vi sikrer en stærk økonomi for fremtiden."*  
 
-    **⁒ Udeladelse (Omission)**  
+    ⁒ **Udeladelse (Omission)**  
     _Definition_: Når en vigtig del af informationen udelades for at ændre betydningen af et argument.  
-    _Eksempel_: *"Vores regering har skabt 50.000 nye job!"* _(Men uden at nævne, at 60.000 er mistet.)_  
+    _Eksempel_:  
+    **Opponent**: *"Vores regering har skabt 50.000 nye job!"*  
+    **Proponent**: *"(Men uden at nævne, at 60.000 er mistet.)"*  
 
-    **➡️ Afledning (Deflection)**  
+    ➡️ **Afledning (Deflection)**  
     _Definition_: Når en politiker ændrer emnet for at undgå at svare direkte på et kritisk spørgsmål.  
     _Eksempel_:  
-    - **Journalist**: *"Har din regering fejlet med inflationen?"*  
-    - **Politiker**: *"Lad os huske på, hvad oppositionen gjorde sidste gang de havde magten!"*  
+    **Opponent**: *"Har din regering fejlet med inflationen?"*  
+    **Proponent**: *"Lad os huske på, hvad oppositionen gjorde sidste gang de havde magten!"*  
 
-    **➕ Svar (Answer)**  
+    ➕ **Svar (Answer)**  
     _Definition_: Når en politiker faktisk besvarer spørgsmålet direkte og uden strategisk manipulation.  
     _Eksempel_:  
-    - **Journalist**: *"Vil I hæve skatten?"*  
-    - **Politiker**: *"Ja, vi planlægger en mindre forhøjelse for at finansiere velfærd."*  
+    **Opponent**: *"Vil I hæve skatten?"*  
+    **Proponent**: *"Ja, vi planlægger en mindre forhøjelse for at finansiere velfærd."*  
 
-    **👀 Andet (Other)**  
+    👀 **Andet (Other)**  
     _Definition_: Hvis en udtalelse ikke passer ind i de andre kategorier, men stadig er relevant.  
     """)
-
 
 
 # kommentarfelt under annotation boksen label-select, der gemmes som comment_text i sheetet
