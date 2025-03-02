@@ -1,0 +1,22 @@
+# Ignore Google API credentials
+client_id.json
+
+# Ignore local environment settings
+.env
+
+# Ignore Streamlit secrets for local development
+.streamlit/secrets.toml
+
+# Ignore Python bytecode and cache
+__pycache__/
+*.py[cod]
+
+# Ignore virtual environment folder
+venv/
+myenv/
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore MacOS system files
+.DS_Store

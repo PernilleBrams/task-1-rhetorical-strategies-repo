@@ -1,0 +1,17 @@
+# Core Packages
+streamlit
+pandas==2.2.3
+gspread==6.1.4
+google-auth==2.38.0
+google-auth-oauthlib==1.2.1
+google-api-core==2.24.1
+
+# Utility Libraries
+requests==2.32.3
+python-dateutil==2.9.0.post0
+
+# For JSON handling
+#jsonschema==4.23.0
+
+# For the labelling function to work
+streamlit_text_label
