@@ -171,8 +171,8 @@ st.markdown("##### Sådan bruges siden:")
 st.markdown("1) **Vælg en label** (Overdrivelse, Undvigelse, Udeladelse, Afledning, Svar (hvis ingen strategi bruges, men et reelt svar gives) eller Andet), **markér én eller flere ytringer, der passer til den label**, og tryk på **den blå update-knap** for at gemme dem.")
 st.markdown("2) Gentag trin 1 så mange gange, du føler er nødvendigt.")
 st.markdown("3) Når der ikke er mere relevant at markere i den viste tekst, så tryk på **Gem annotation**-knappen i bunden af siden for at gemme *alle* svar og gå videre til den næste dialog.")
-#st.markdown("__")
-st.markdown("👀👀👀👀👀👀")
+st.markdown("______")
+#st.markdown("👀👀👀👀👀👀")
 st.markdown("**⚡️ Tips ⚡️ :**")
 st.markdown("""
 - Hvis du fortryder en annotation, kan du klikke på markeringen og trykke **slet** / **delete** på dit tastatur.  
