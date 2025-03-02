@@ -36,7 +36,7 @@ def get_user_worksheet(user_id):
     try:
         return spreadsheet.worksheet(user_id)
     except gspread.exceptions.WorksheetNotFound:
-        worksheet = spreadsheet.add_worksheet(title=user_id, rows="1500", cols="7")
+        worksheet = spreadsheet.add_worksheet(title=user_id, rows="1000", cols="7")
         worksheet.insert_row(
             ["user_id", "text_index", "full_text", "stretch", "dodge", "omission", "deflection", "timestamp"],
             index=1
