@@ -172,7 +172,8 @@ st.markdown("1) **Vælg en label** (Overdrivelse, Undvigelse, Udeladelse, Afledn
 st.markdown("2) Gentag trin 1 så mange gange, du føler er nødvendigt.")
 st.markdown("3) Når der ikke er mere relevant at markere i den viste tekst, så tryk på **Gem annotation**-knappen i bunden af siden for at gemme *alle* svar og gå videre til den næste dialog.")
 #st.markdown("__")
-st.markdown("**✅ Tips:**")
+st.markdown("👀👀👀👀👀👀")
+st.markdown("**⚡️ Tips ⚡️ :**")
 st.markdown("""
 - Hvis du fortryder en annotation, kan du klikke på markeringen og trykke **slet** / **delete** på dit tastatur.  
 - Hvis du vil have en pause, kan du logge ud på log-ud knappen til venstre og vende tilbage senere og starte, hvor du slap.  
