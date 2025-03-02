@@ -183,7 +183,7 @@ st.markdown("""
 """)
 #     ### **📌 Forklaring på retoriske strategier med eksmepler**
 
-with st.expander("🔍 Se eksempler på labels"):
+with st.expander("🔍 Klik her for at se lidt eksempler på, hvordan stategierne kan se ud i brug 🔍 "):
     st.markdown("""
     ### **📌 Label forklaringer & eksempler**
     
