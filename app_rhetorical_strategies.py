@@ -14,6 +14,30 @@ import threading
 from google.oauth2.service_account import Credentials
 from streamlit_text_label import label_select
 
+# Color setup
+st.markdown(
+    """
+    <style>
+    /* Styled labels with distinct colors */
+    .label-class[data-label="Overdrivelse"] { background-color: #007bff !important; color: white !important; } /* Blue */
+    .label-class[data-label="Undvigelse"] { background-color: #ff4d4f !important; color: white !important; } /* Red */
+    .label-class[data-label="Udeladelse"] { background-color: #ffa500 !important; color: black !important; } /* Orange */
+    .label-class[data-label="Afledning"] { background-color: #9c27b0 !important; color: white !important; } /* Purple */
+    .label-class[data-label="Svar"] { background-color: #28a745 !important; color: white !important; } /* Green */
+    .label-class[data-label="Andet"] { background-color: #6c757d !important; color: white !important; } /* Gray */
+    
+    /* Optional: Slightly rounded corners for better UI */
+    .label-class {
+        border-radius: 6px !important;
+        padding: 4px 8px !important;
+        font-weight: bold !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+
 # --- GOOGLE SHEETS SETUP ---
 GOOGLE_CREDENTIALS = st.secrets["GOOGLE_CREDENTIALS"]
 SHEET_ID = st.secrets["SHEET_ID"]
