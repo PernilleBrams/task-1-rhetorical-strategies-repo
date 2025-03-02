@@ -36,9 +36,18 @@ def get_user_worksheet(user_id):
     try:
         return spreadsheet.worksheet(user_id)
     except gspread.exceptions.WorksheetNotFound:
-        worksheet = spreadsheet.add_worksheet(title=user_id, rows="1000", cols="7")
+        worksheet = spreadsheet.add_worksheet(title=user_id, rows="1000", cols="10")
         worksheet.insert_row(
-            ["user_id", "text_index", "full_text", "stretch", "dodge", "omission", "deflection", "timestamp"],
+            ["user_id", 
+             "text_index", 
+             "full_text", 
+             "stretch", 
+             "dodge", 
+             "omission", 
+             "deflection", 
+             "answer",
+             "other",
+             "timestamp"],
             index=1
         )
         return worksheet
@@ -48,7 +57,16 @@ def get_annotated_texts(user_id):
     worksheet = get_user_worksheet(user_id)
     data = worksheet.get_all_values()
     if len(data) > 1:
-        df_annotations = pd.DataFrame(data[1:], columns=["user_id", "text_index", "full_text", "stretch", "dodge", "omission", "deflection", "timestamp"])
+        df_annotations = pd.DataFrame(data[1:], columns=["user_id", 
+                                                         "text_index", 
+                                                         "full_text", 
+                                                         "stretch", 
+                                                         "dodge", 
+                                                         "omission", 
+                                                         "deflection", 
+                                                         "answer",
+                                                         "other",
+                                                         "timestamp"])
         return set(df_annotations["full_text"].tolist())
     return set()
 
@@ -171,7 +189,8 @@ formatted_text = re.sub(r"\*\*(.*?)\*\*", lambda m: bold_unicode(m.group(1)), cu
 
 selections = label_select(
     body=formatted_text,
-    labels=["Stretch", "Dodge", "Omission", "Deflection"]
+    #labels=["Stretch", "Dodge", "Omission", "Deflection", "Svar", "Andet"]
+    labels=["Overdrivelse", "Undvigelse", "Udeladelse", "Afledning", "Svar", "Andet"]
 )
 
 
@@ -202,10 +221,12 @@ submit_button = st.button("Gem annotation", disabled=submit_button_disabled)
 
 if submit_button:
     # Extract text per label from recorded selections
-    stretch_text = " ".join([s.text for s in selection_data if 'Stretch' in s.labels])
-    dodge_text = " ".join([s.text for s in selection_data if 'Dodge' in s.labels])
-    omission_text = " ".join([s.text for s in selection_data if 'Omission' in s.labels])
-    deflection_text = " ".join([s.text for s in selection_data if 'Deflection' in s.labels])
+    stretch_text = " ".join([s.text for s in selection_data if 'Overdrivelse' in s.labels])
+    dodge_text = " ".join([s.text for s in selection_data if 'Undvigelse' in s.labels])
+    omission_text = " ".join([s.text for s in selection_data if 'Udeladelse' in s.labels])
+    deflection_text = " ".join([s.text for s in selection_data if 'Afledning' in s.labels])
+    answer_text = " ".join([s.text for s in selection_data if 'Svar' in s.labels])
+    other_text = " ".join([s.text for s in selection_data if 'Andet' in s.labels])
 
     annotation_data = [
         user_id,
@@ -215,6 +236,8 @@ if submit_button:
         dodge_text,
         omission_text,
         deflection_text,
+        answer_text,
+        other_text,
         datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     ]
 
