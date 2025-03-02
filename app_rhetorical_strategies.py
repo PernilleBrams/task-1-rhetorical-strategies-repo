@@ -195,13 +195,15 @@ formatted_text = re.sub(r"\*\*(.*?)\*\*", lambda m: bold_unicode(m.group(1)), cu
 st.markdown(
     """
     <style>
-    /* Override default label colors for streamlit_text_label */
-    span[data-label="Overdrivelse"] { background-color: #007bff !important; color: white !important; } /* Blue */
-    span[data-label="Undvigelse"] { background-color: #ff4d4f !important; color: white !important; } /* Red */
-    span[data-label="Udeladelse"] { background-color: #ffa500 !important; color: black !important; } /* Orange */
-    span[data-label="Afledning"] { background-color: #9c27b0 !important; color: white !important; } /* Purple */
-    span[data-label="Svar"] { background-color: #28a745 !important; color: white !important; } /* Green */
-    span[data-label="Andet"] { background-color: #6c757d !important; color: white !important; } /* Gray */
+    /* Override Bootstrap colors for labels */
+    :root {
+        --primary: #007bff;  /* Blue for Overdrivelse */
+        --danger: #ff4d4f;   /* Red for Undvigelse */
+        --warning: #ffa500;  /* Orange for Udeladelse */
+        --purple: #9c27b0;   /* Purple for Afledning */
+        --success: #28a745;  /* Green for Svar */
+        --gray: #6c757d;     /* Gray for Andet */
+    }
     </style>
     """,
     unsafe_allow_html=True
