@@ -14,23 +14,6 @@ import threading
 from google.oauth2.service_account import Credentials
 from streamlit_text_label import label_select
 
-# Color setup
-st.markdown(
-    """
-    <style>
-    /* Styled labels with distinct colors */
-    .label-class[data-label="Overdrivelse"] { background-color: #007bff !important; color: white !important; } /* Blue */
-    .label-class[data-label="Undvigelse"] { background-color: #ff4d4f !important; color: white !important; } /* Red */
-    .label-class[data-label="Udeladelse"] { background-color: #ffa500 !important; color: black !important; } /* Orange */
-    .label-class[data-label="Afledning"] { background-color: #9c27b0 !important; color: white !important; } /* Purple */
-    .label-class[data-label="Svar"] { background-color: #28a745 !important; color: white !important; } /* Green */
-    .label-class[data-label="Andet"] { background-color: #6c757d !important; color: white !important; } /* Gray */
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
-
 # --- GOOGLE SHEETS SETUP ---
 GOOGLE_CREDENTIALS = st.secrets["GOOGLE_CREDENTIALS"]
 SHEET_ID = st.secrets["SHEET_ID"]
@@ -208,6 +191,21 @@ def bold_unicode(text):
 # Convert bold-marked text (**text**) into Unicode bold characters
 import re
 formatted_text = re.sub(r"\*\*(.*?)\*\*", lambda m: bold_unicode(m.group(1)), current_text)
+
+st.markdown(
+    """
+    <style>
+    /* Override default label colors for streamlit_text_label */
+    span[data-label="Overdrivelse"] { background-color: #007bff !important; color: white !important; } /* Blue */
+    span[data-label="Undvigelse"] { background-color: #ff4d4f !important; color: white !important; } /* Red */
+    span[data-label="Udeladelse"] { background-color: #ffa500 !important; color: black !important; } /* Orange */
+    span[data-label="Afledning"] { background-color: #9c27b0 !important; color: white !important; } /* Purple */
+    span[data-label="Svar"] { background-color: #28a745 !important; color: white !important; } /* Green */
+    span[data-label="Andet"] { background-color: #6c757d !important; color: white !important; } /* Gray */
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 selections = label_select(
     body=formatted_text,
