@@ -167,9 +167,9 @@ current_text = unannotated_texts[st.session_state.text_index]
 # --- TEXT HIGHLIGHTING ---
 st.markdown("## Retoriske strategier i politiske debatter")
 st.markdown("#### Sådan bruges siden:")
-st.markdown("##### 1) Vælg en label, markér tekst, og tryk på den blå update-knap for at gemme dem.")
-st.markdown("##### 2) Gør step 1) indtil du ikke synes, det er mere relevant.")
-st.markdown("##### 3) Når du er klar til at gå videre, så tryk på Gem annotation i bunden af siden for at gemme alle svar og gå videre til den næste dialog.")
+st.markdown("###### 1) Vælg en label, markér tekst, og tryk på den blå update-knap for at gemme dem.")
+st.markdown("###### 2) Gør step 1) indtil du ikke synes, det er mere relevant.")
+st.markdown("###### 3) Når du er klar til at gå videre, så tryk på Gem annotation i bunden af siden for at gemme alle svar og gå videre til den næste dialog.")
 
 # kommentarfelt under annotation boksen label-select, der gemmes som comment_text i sheetet
 
