@@ -191,7 +191,7 @@ with st.expander("🔍 Se eksempler på labels"):
     _Definition_: Når en politiker forstærker eller overdriver en påstand uden at give præcise beviser.  
     _Eksempel_:  
     **Opponent**: *"Jeres politik har ført til stigende arbejdsløshed og økonomisk krise!"*  
-    **Proponent**: *"Tværtimod! Vi har skabt den største økonomiske vækst i historien!"*  
+    **Proponent**: *"Tværtimod. Vi har skabt den største økonomiske vækst i historien."*  
 
     ↔️ **Undvigelse (Dodge)**  
     _Definition_: Når en politiker undgår at svare direkte på et spørgsmål og i stedet taler udenom.  
@@ -200,16 +200,16 @@ with st.expander("🔍 Se eksempler på labels"):
     **Proponent**: *"Det vigtigste er, at vi sikrer en stærk økonomi for fremtiden."*  
 
     ⁒ **Udeladelse (Omission)**  
-    _Definition_: Når en vigtig del af informationen udelades for at ændre betydningen af et argument.  
-    _Eksempel_:  
-    **Opponent**: *"Vores regering har skabt 50.000 nye job!"*  
-    **Proponent**: *"(Men uden at nævne, at 60.000 er mistet.)"*  
-
+    _Definition_: Når en vigtig del af informationen udelades for at ændre betydningen af et argument._  
+    _Eksempel:_  
+    **Opponent**: *"Jeres politik har ført til store tab af arbejdspladser!"*  
+    **Proponent**: *"Faktisk har vi skabt 50.000 nye job!"* _(Men uden at nævne, at 60.000 er mistet.)_  
+    
     ➡️ **Afledning (Deflection)**  
     _Definition_: Når en politiker ændrer emnet for at undgå at svare direkte på et kritisk spørgsmål.  
     _Eksempel_:  
     **Opponent**: *"Har din regering fejlet med inflationen?"*  
-    **Proponent**: *"Lad os huske på, hvad oppositionen gjorde sidste gang de havde magten!"*  
+    **Proponent**: *"Lad os huske på, hvad oppositionen gjorde sidste gang de havde magten."*  
 
     ➕ **Svar (Answer)**  
     _Definition_: Når en politiker faktisk besvarer spørgsmålet direkte og uden strategisk manipulation.  
