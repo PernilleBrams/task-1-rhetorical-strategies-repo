@@ -263,15 +263,16 @@ def bold_unicode(text):
     return text.translate(trans)
 
 def format_speaker_text(text):
-    """ Ensures speaker names are bold (Unicode) and a newline appears after the colon. """
+    """ Ensures speaker names are bold (Unicode) and a newline appears before bold parts (except the first one). """
     # Step 1: Identify speaker names before the colon (e.g., "Opponent 1", "Forslagsstiller")
     text = re.sub(r"\*\*(.*?):\*\*", lambda m: bold_unicode(m.group(1)) + ":", text)  
     
     # Step 2: Add a newline **after** the colon (keeping bold formatting intact)
     text = re.sub(r"(\S+): ", r"\1:\n", text)  
 
-    # Step 3: Convert the bold markdown **text** into Unicode bold
-    text = re.sub(r"\*\*(.*?)\*\*", lambda m: bold_unicode(m.group(1)), text)
+    # Step 3: Convert the bold markdown **text** into Unicode bold with newlines before the bolded parts except the first one
+    text = re.sub(r"\*\*(.*?)\*\*", lambda m: "\n" + bold_unicode(m.group(1)), text, count=1)  # Don't add newline for the first match
+    text = re.sub(r"\*\*(.*?)\*\*", lambda m: "\n" + bold_unicode(m.group(1)), text)  # Add newline for the rest
 
     return text
 
