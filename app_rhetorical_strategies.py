@@ -193,7 +193,7 @@ st.markdown("""
 - Hvis du vil have en pause, kan du logge ud på log-ud knappen til venstre og vende tilbage senere og starte, hvor du slap.  
 - Du optjener flere lod i lotteriet per færdiggjort annotations-runde.
     
-*Har du nogle spørgsmål? Skriv til mig (Pernille) på au650502@uni.au.dk* 🌞
+*Har du nogle spørgsmål? Skriv til mig (Pernille) på au650502@cas.au.dk* 🌞
 """)
 #     ### **📌 Forklaring på retoriske strategier med eksmepler**
 
