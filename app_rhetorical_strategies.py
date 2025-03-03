@@ -256,7 +256,12 @@ def bold_unicode(text):
 # Convert bold-marked text (**text**) into Unicode bold characters
 import re
 #formatted_text = re.sub(r"\*\*(.*?)\*\*", lambda m: bold_unicode(m.group(1)), current_text)
-formatted_text = re.sub(r"\*\*(.*?)\*\*", lambda m: "\n" + bold_unicode(m.group(1)) + "\n", current_text)
+#formatted_text = re.sub(r"\*\*(.*?)\*\*", lambda m: "\n" + bold_unicode(m.group(1)) + "\n", current_text)
+formatted_text = re.sub(
+    r"\*\*(.*?):\*\*",  # Match bold text ending with a colon
+    lambda m: bold_unicode(m.group(1)) + ":\n",  # Apply bold and add a newline after the colon
+    current_text
+)
 
 selections = label_select(
     body=formatted_text,
