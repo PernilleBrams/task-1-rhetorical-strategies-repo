@@ -299,6 +299,8 @@ selections = label_select(
     labels=["Overdrivelse", "Undvigelse", "Udeladelse", "Afledning", "Svar", "Andet"]
 )
 
+# Display a little msg
+st.markdown("*Hvis du ikke ser en blå 'Update' knap under boksen med debat-tekst, så udvid dit browservindue lidt.*")
 
 #selections = label_select(
 #    body=formatted_text,
