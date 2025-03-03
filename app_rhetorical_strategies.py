@@ -1,8 +1,5 @@
 '''
 formerly app_marking_v2_attempt100.py
-
-This works but has two buttons, update and gem annotation. Also is a bit clunky.
-Doesnt save to sheets atm when on eduroam? should be fine when deployed on streamlit tho
 '''
 
 import streamlit as st
@@ -13,6 +10,23 @@ import os
 import threading
 from google.oauth2.service_account import Credentials
 from streamlit_text_label import label_select
+
+# Force Light Mode 
+st.markdown(
+    """
+    <style>
+        body {
+            background-color: white !important;
+            color: black !important;
+        }
+        .stApp {
+            background-color: white !important;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 
 # --- GOOGLE SHEETS SETUP ---
 GOOGLE_CREDENTIALS = st.secrets["GOOGLE_CREDENTIALS"]
@@ -241,7 +255,8 @@ def bold_unicode(text):
 
 # Convert bold-marked text (**text**) into Unicode bold characters
 import re
-formatted_text = re.sub(r"\*\*(.*?)\*\*", lambda m: bold_unicode(m.group(1)), current_text)
+#formatted_text = re.sub(r"\*\*(.*?)\*\*", lambda m: bold_unicode(m.group(1)), current_text)
+formatted_text = re.sub(r"\*\*(.*?)\*\*", lambda m: "\n" + bold_unicode(m.group(1)) + "\n", current_text)
 
 selections = label_select(
     body=formatted_text,
