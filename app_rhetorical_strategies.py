@@ -246,17 +246,21 @@ with st.expander("🔍 Klik her for at se lidt eksempler på, hvordan stategiern
 # Convert Markdown-style bold (**text**) to HTML-style bold (<b>text</b>)
 # formatted_text = current_text.replace("**", "<b>", 1).replace("**", "</b>", 1)
 
+#def bold_unicode(text): # p1
+#    """ Converts text to bold using Unicode Mathematical Bold Letters """
+#    normal = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+#    bold = "𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗥𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭𝗮𝗯𝗰𝗱𝗲𝗳𝗴𝗵𝗶𝗷𝗸𝗹𝗺𝗻𝗼𝗽𝗾𝗿𝘀𝘁𝘂𝘃𝘄𝘅𝘆𝘇"
+#    trans = str.maketrans(normal, bold)
+#    return text.translate(trans)
+
+import re
+
 def bold_unicode(text):
     """ Converts text to bold using Unicode Mathematical Bold Letters """
     normal = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
     bold = "𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗥𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭𝗮𝗯𝗰𝗱𝗲𝗳𝗴𝗵𝗶𝗷𝗸𝗹𝗺𝗻𝗼𝗽𝗾𝗿𝘀𝘁𝘂𝘃𝘄𝘅𝘆𝘇"
     trans = str.maketrans(normal, bold)
     return text.translate(trans)
-
-# Convert bold-marked text (**text**) into Unicode bold characters
-import re
-#formatted_text = re.sub(r"\*\*(.*?)\*\*", lambda m: bold_unicode(m.group(1)), current_text)
-#formatted_text = re.sub(r"\*\*(.*?)\*\*", lambda m: "\n" + bold_unicode(m.group(1)) + "\n", current_text)
 
 def format_speaker_text(text):
     """ Ensures speaker names are bold (Unicode) and a newline appears after the colon. """
@@ -266,10 +270,27 @@ def format_speaker_text(text):
     # Step 2: Add a newline **after** the colon (keeping bold formatting intact)
     text = re.sub(r"(\S+): ", r"\1:\n", text)  
 
+    # Step 3: Convert the bold markdown **text** into Unicode bold
+    text = re.sub(r"\*\*(.*?)\*\*", lambda m: bold_unicode(m.group(1)), text)
+
     return text
 
-formatted_text = format_speaker_text(current_text)
+# Convert bold-marked text (**text**) into Unicode bold characters
+#import re
+#formatted_text = re.sub(r"\*\*(.*?)\*\*", lambda m: bold_unicode(m.group(1)), current_text) # p1
+#formatted_text = re.sub(r"\*\*(.*?)\*\*", lambda m: "\n" + bold_unicode(m.group(1)) + "\n", current_text) # p1
 
+#def format_speaker_text(text):
+#    """ Ensures speaker names are bold (Unicode) and a newline appears after the colon. """
+#    # Step 1: Identify speaker names before the colon (e.g., "Opponent 1", "Forslagsstiller")
+#    text = re.sub(r"\*\*(.*?):\*\*", lambda m: bold_unicode(m.group(1)) + ":", text)  
+#    
+#    # Step 2: Add a newline **after** the colon (keeping bold formatting intact)
+#    text = re.sub(r"(\S+): ", r"\1:\n", text)  
+
+#    return text
+
+formatted_text = format_speaker_text(current_text)
 
 selections = label_select(
     body=formatted_text,
