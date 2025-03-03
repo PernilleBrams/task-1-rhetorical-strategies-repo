@@ -257,11 +257,14 @@ def bold_unicode(text):
 import re
 #formatted_text = re.sub(r"\*\*(.*?)\*\*", lambda m: bold_unicode(m.group(1)), current_text)
 #formatted_text = re.sub(r"\*\*(.*?)\*\*", lambda m: "\n" + bold_unicode(m.group(1)) + "\n", current_text)
-formatted_text = re.sub(
-    r"\*\*(.*?):\*\*",  # Match bold text ending with a colon
-    lambda m: bold_unicode(m.group(1)) + ":\n",  # Apply bold and add a newline after the colon
-    current_text
-)
+
+def format_speaker_text(text):
+    """ Converts speaker names to bold and ensures a newline after the colon. """
+    text = re.sub(r"\*\*(.*?):\*\*", lambda m: bold_unicode(m.group(1)) + ":", text)  # Bold the speaker
+    text = re.sub(r"(:) ", r"\1\n", text)  # Add a newline after the colon but keep the space
+    return text
+
+formatted_text = format_speaker_text(current_text)
 
 selections = label_select(
     body=formatted_text,
