@@ -259,12 +259,17 @@ import re
 #formatted_text = re.sub(r"\*\*(.*?)\*\*", lambda m: "\n" + bold_unicode(m.group(1)) + "\n", current_text)
 
 def format_speaker_text(text):
-    """ Converts speaker names to bold and ensures a newline after the colon. """
-    text = re.sub(r"\*\*(.*?):\*\*", lambda m: bold_unicode(m.group(1)) + ":", text)  # Bold the speaker
-    text = re.sub(r"(:) ", r"\1\n", text)  # Add a newline after the colon but keep the space
+    """ Ensures speaker names are bold (Unicode) and a newline appears after the colon. """
+    # Step 1: Identify speaker names before the colon (e.g., "Opponent 1", "Forslagsstiller")
+    text = re.sub(r"\*\*(.*?):\*\*", lambda m: bold_unicode(m.group(1)) + ":", text)  
+    
+    # Step 2: Add a newline **after** the colon (keeping bold formatting intact)
+    text = re.sub(r"(\S+): ", r"\1:\n", text)  
+
     return text
 
 formatted_text = format_speaker_text(current_text)
+
 
 selections = label_select(
     body=formatted_text,
