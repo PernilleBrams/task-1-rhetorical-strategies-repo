@@ -68,7 +68,8 @@ def get_user_worksheet(user_id):
              #"answer",
              
              "other",
-             "timestamp"],
+             "timestamp",
+             "comment_field"],
             index=1
         )
         return worksheet
@@ -335,6 +336,9 @@ for label, texts in formatted_selections.items():
 # Automatically disable the button if no selections are made
 submit_button_disabled = len(selection_data) == 0
 
+# Add comment
+comment_text = st.text_area("Tilføj en kommentar (hvis du f.eks. er usikker eller bare har en kommentar til din annotering):")
+
 # --- Submit button ---
 submit_button = st.button("Gem annotation", disabled=submit_button_disabled)
 
@@ -365,6 +369,7 @@ if submit_button:
         #deflection_text,
         
         other_text,
+        comment_text,
         datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     ]
 
