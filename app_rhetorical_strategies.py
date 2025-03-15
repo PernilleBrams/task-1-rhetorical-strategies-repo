@@ -55,6 +55,7 @@ def get_user_worksheet(user_id):
             ["user_id", 
              "text_index", 
              "full_text", 
+             "debate_unit_id",
 
              # Labels
              "answer",
@@ -82,6 +83,7 @@ def get_annotated_texts(user_id):
         df_annotations = pd.DataFrame(data[1:], columns=["user_id", 
                                                          "text_index", 
                                                          "full_text", 
+                                                         "debate_unit_id",
                                                          
                                                          "answer",
                                                          "stretch", 
@@ -148,7 +150,8 @@ if not st.session_state.get("worksheet_ready", False):
 
 # --- LOAD TEXTS FROM LOCAL FILE ---
 BASE_DIR = os.getcwd()
-DATA_FILE = os.path.join(BASE_DIR, "data", "clean", "processed_texts.txt")
+#DATA_FILE = os.path.join(BASE_DIR, "data", "clean", "processed_texts.txt")
+DATA_FILE = os.path.join(BASE_DIR, "data", "clean", "processed_texts_test.txt")
 
 if not os.path.exists(DATA_FILE):
     st.error("Text file missing! Run `preprocess.py` first.")
@@ -220,26 +223,26 @@ with st.expander("🔍 Klik her for at se lidt eksempler på, hvordan stategiern
     ➕ **Svar (Answer)**  
     _Definition_: Når en politiker faktisk besvarer spørgsmålet direkte og uden strategisk manipulation.  
     _Eksempel_:  
-    **Opponent**: *"Vil I hæve skatten?"*  
-    **Proponent**: *"Ja, vi planlægger en mindre forhøjelse for at finansiere velfærd."*  
+    **Spørger**: *"Vil I hæve skatten?"*  
+    **Ordfører**: *"Ja, vi planlægger en mindre forhøjelse for at finansiere velfærd."*  
 
     ⬆️ **Overdrivelse (Stretch)**  
     _Definition_: Når en politiker forstærker eller overdriver en påstand uden at give præcise beviser.  
     _Eksempel_:  
-    **Opponent**: *"Jeres politik har ført til stigende arbejdsløshed og økonomisk krise!"*  
-    **Proponent**: *"Tværtimod. Vi har skabt den største økonomiske vækst i historien."*  
+    **Spørger**: *"Jeres politik har ført til stigende arbejdsløshed og økonomisk krise!"*  
+    **Ordfører**: *"Tværtimod. Vi har skabt den største økonomiske vækst i historien."*  
 
     ↔️ **Undvigelse (Dodge)**  
     _Definition_: Når en politiker undgår at svare direkte på et spørgsmål og i stedet taler udenom.  
     _Eksempel_:  
-    **Opponent**: *"Vil jeres parti hæve skatten?"*  
-    **Proponent**: *"Det vigtigste er, at vi sikrer en stærk økonomi for fremtiden."*  
+    **Spørger**: *"Vil jeres parti hæve skatten?"*  
+    **Ordfører**: *"Det vigtigste er, at vi sikrer en stærk økonomi for fremtiden."*  
     
     ⚔️ **Angreb (Attack)**
     _Definition_: Når en politiker undgår at svare på spørgsmålet og i stedet angriber modstanderen, journalisten eller en tredjepart. Dette kan ske gennem personangreb, nedgørende bemærkninger eller afledning via kritik af andre.
     _Eksempel_:
-    **Opponent**: *"Hvorfor har din regering ikke indfriet sine løfter om bedre sundhedsvæsen?"*
-    **Proponent**: *"Det er vildt at høre dét fra et parti, der selv har skåret milliarder fra sundhedssektoren."*
+    **Spørger**: *"Hvorfor har din regering ikke indfriet sine løfter om bedre sundhedsvæsen?"*
+    **Ordfører**: *"Det er vildt at høre dét fra et parti, der selv har skåret milliarder fra sundhedssektoren."*
 
     👀 **Andet (Other)**  
     _Definition_: Hvis en udtalelse ikke passer ind i de andre kategorier, men stadig er relevant.  
@@ -270,35 +273,36 @@ def bold_unicode(text):
     return text.translate(trans)
 
 def format_speaker_text(text):
-    """ Ensures speaker names are bold (Unicode) and a newline appears before bold parts (except the first one). """
-    # Step 1: Identify speaker names before the colon (e.g., "Opponent 1", "Forslagsstiller")
+    """ 
+    Extracts DebateUnitID.
+    Ensures speaker names are bold (Unicode) and a newline appears before bold parts (except the first one). 
+    """
+    # Step 1: Extract DebateUnitID from the text
+    match = re.match(r"\[(\d+)\]\s*(.*)", text)
+    if match:
+        debate_unit_id = int(match.group(1))  # Extracted number
+        text = match.group(2)  # Remove the ID from the text
+    else:
+        debate_unit_id = None  # No ID found
+
+    # Step 2: Identify speaker names before the colon and bold them
     text = re.sub(r"\*\*(.*?):\*\*", lambda m: bold_unicode(m.group(1)) + ":", text)  
     
-    # Step 2: Add a newline **after** the colon (keeping bold formatting intact)
+    # Step 3: Add a newline **after** the colon (keeping bold formatting intact)
     text = re.sub(r"(\S+): ", r"\1:\n", text)  
 
-    # Step 3: Convert the bold markdown **text** into Unicode bold with newlines before the bolded parts except the first one
+    # Step 4: Convert bold markdown **text** into Unicode bold
     text = re.sub(r"\*\*(.*?)\*\*", lambda m: "\n" + bold_unicode(m.group(1)), text, count=1)  # Don't add newline for the first match
     text = re.sub(r"\*\*(.*?)\*\*", lambda m: "\n" + bold_unicode(m.group(1)), text)  # Add newline for the rest
 
-    return text
+    return debate_unit_id, text  # Return extracted ID and formatted text
 
 # Convert bold-marked text (**text**) into Unicode bold characters
 #import re
 #formatted_text = re.sub(r"\*\*(.*?)\*\*", lambda m: bold_unicode(m.group(1)), current_text) # p1
 #formatted_text = re.sub(r"\*\*(.*?)\*\*", lambda m: "\n" + bold_unicode(m.group(1)) + "\n", current_text) # p1
 
-#def format_speaker_text(text):
-#    """ Ensures speaker names are bold (Unicode) and a newline appears after the colon. """
-#    # Step 1: Identify speaker names before the colon (e.g., "Opponent 1", "Forslagsstiller")
-#    text = re.sub(r"\*\*(.*?):\*\*", lambda m: bold_unicode(m.group(1)) + ":", text)  
-#    
-#    # Step 2: Add a newline **after** the colon (keeping bold formatting intact)
-#    text = re.sub(r"(\S+): ", r"\1:\n", text)  
-
-#    return text
-
-formatted_text = format_speaker_text(current_text)
+debate_unit_id, formatted_text = format_speaker_text(current_text)
 
 selections = label_select(
     body=formatted_text,
@@ -368,6 +372,7 @@ if submit_button:
         user_id,
         st.session_state.text_index,
         current_text,
+        debate_unit_id,
         
         answer_text,
         stretch_text,
