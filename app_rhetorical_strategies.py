@@ -68,8 +68,8 @@ def get_user_worksheet(user_id):
              #"answer",
              
              "other",
-             "timestamp",
-             "comment_field"],
+             "comment_field",
+             "timestamp"],
             index=1
         )
         return worksheet
