@@ -167,9 +167,9 @@ df_texts = pd.DataFrame(texts, columns=["text"])
 unannotated_texts = df_texts[~df_texts["text"].isin(st.session_state.annotated_texts)]["text"].tolist() # was text before
 
 # NEWCODE ✅ Ensure random order, but keep consistency across a session
-if "unannotated_texts" not in st.session_state:
-    random.shuffle(unannotated_texts)
-    st.session_state.unannotated_texts = unannotated_texts  # Store shuffled order in session state
+#if "unannotated_texts" not in st.session_state:
+#    random.shuffle(unannotated_texts)
+#    st.session_state.unannotated_texts = unannotated_texts  # Store shuffled order in session state
 
 # ✅ Ensure `text_index` is initialized correctly
 if "text_index" not in st.session_state or st.session_state.text_index == -1:
