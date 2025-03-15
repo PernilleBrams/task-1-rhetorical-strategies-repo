@@ -339,12 +339,13 @@ submit_button_disabled = len(selection_data) == 0
 if "comment_text" not in st.session_state:
     st.session_state.comment_text = ""
 
-# Add comment field with session state key
-comment_text = st.text_area(
+# Store the user's input in a temporary variable
+comment_input = st.text_area(
     "Tilføj en kommentar (hvis du f.eks. er usikker eller bare har en kommentar til din annotering):",
-    value=st.session_state.comment_text,  # Ensure value is linked to session state
+    value=st.session_state.comment_text,  # Ensure it's linked to session state
     key="comment_text"  # This ensures that Streamlit updates session state
 )
+
 
 
 # --- Submit button ---
@@ -377,7 +378,7 @@ if submit_button:
         #deflection_text,
         
         other_text,
-        st.session_state.comment_text,  # Use session state instead of comment_text
+        comment_input,
         datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     ]
 
@@ -387,10 +388,8 @@ if submit_button:
     if len(st.session_state.annotations) >= 5:
         threading.Thread(target=save_annotations, args=(user_id, st.session_state.annotations.copy()), daemon=True).start()
         st.session_state.annotations = []
-
-    # Clear the comment field in session state
-    st.session_state.update({"comment_text": ""})
     
     # Move to the next text
     st.session_state.text_index += 1
+    st.session_state.comment_text = ""  # Reset before rerun
     st.rerun()
