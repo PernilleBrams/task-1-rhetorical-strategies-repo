@@ -83,7 +83,7 @@ def get_annotated_texts(user_id):
                                                          "text_index", 
                                                          "full_text", 
                                                          
-                                                         "answer"
+                                                         "answer",
                                                          "stretch", 
                                                          "evasion",
                                                          "attack",
@@ -94,6 +94,7 @@ def get_annotated_texts(user_id):
                                                          #"answer",
                                                          
                                                          "other",
+                                                         "comment_field",
                                                          "timestamp"])
         return set(df_annotations["full_text"].tolist())
     return set()
@@ -158,8 +159,8 @@ with open(DATA_FILE, "r", encoding="utf-8") as file:
 
 df_texts = pd.DataFrame(texts, columns=["text"])
 
-# ✅ Remove already annotated texts
-unannotated_texts = df_texts[~df_texts["text"].isin(st.session_state.annotated_texts)]["text"].tolist()
+# ✅ Remove already annotated texts # herhen
+unannotated_texts = df_texts[~df_texts["text"].isin(st.session_state.annotated_texts)]["text"].tolist() # was text before
 
 # ✅ Ensure `text_index` is initialized correctly
 if "text_index" not in st.session_state or st.session_state.text_index == -1:
