@@ -388,8 +388,9 @@ if submit_button:
     if len(st.session_state.annotations) >= 5:
         threading.Thread(target=save_annotations, args=(user_id, st.session_state.annotations.copy()), daemon=True).start()
         st.session_state.annotations = []
+
+    st.session_state["comment_text"] = ""
     
     # Move to the next text
     st.session_state.text_index += 1
-    st.session_state.comment_text = ""  # Reset before rerun
     st.rerun()
