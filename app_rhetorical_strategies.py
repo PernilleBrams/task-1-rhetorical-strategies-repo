@@ -157,11 +157,20 @@ if not st.session_state.get("worksheet_ready", False):
 # --- LOAD TEXTS FROM LOCAL FILE ---
 BASE_DIR = os.getcwd()
 #DATA_FILE = os.path.join(BASE_DIR, "data", "clean", "processed_texts.txt")
-DATA_FILE = os.path.join(BASE_DIR, "data", "clean", "processed_texts_test.txt")
+#DATA_FILE = os.path.join(BASE_DIR, "data", "clean", "processed_texts_test.txt")
+#DATA_FILE = os.path.join(BASE_DIR, "data", "clean", user_id, "processed_texts_test.txt")
+# ✅ Dynamically assign each user to their personal data folder
+DATA_FOLDER = os.path.join(BASE_DIR, "data", "clean", st.session_state.user_id)
+DATA_FILE = os.path.join(DATA_FOLDER, "processed_texts_test.txt")
 
+# ✅ Check if the personal folder exists
 if not os.path.exists(DATA_FILE):
-    st.error("Text file missing! Run `preprocess.py` first.")
+    st.error(f"🚨 Data file missing for user: `{st.session_state.user_id}`! Ensure `{DATA_FILE}` exists.")
     st.stop()
+
+#if not os.path.exists(DATA_FILE):
+#    st.error("Text file missing! Run `preprocess.py` first.")
+#    st.stop()
 
 with open(DATA_FILE, "r", encoding="utf-8") as file:
     texts = [line.strip() for line in file if line.strip()]
