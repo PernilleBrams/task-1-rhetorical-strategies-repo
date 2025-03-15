@@ -46,49 +46,39 @@ def fetch_allowed_users():
     # Get users
     allowed_users = worksheet.col_values(1)  
     return set(allowed_users)
-    
+
 def get_user_worksheet(user_id):
-    """Ensure each user has a personal worksheet and fetch batch code."""
+    """ Ensure each user has a personal worksheet. Create one if it doesn’t exist. """
     spreadsheet = gc.open_by_key(SHEET_ID)
-
-    # ✅ Step 1: Fetch user batch assignment from "allowed_users_Deception_Detection"
-    worksheet_users = spreadsheet.worksheet("allowed_users_Deception_Detection")
-    data = worksheet_users.get_all_values()  # Fetch all rows
-
-    user_batch_code = None
-    for row in data[1:]:  # Skip headers
-        if len(row) >= 2 and row[0].strip() == user_id:  # Match user_id in col 1
-            user_batch_code = row[1].strip()  # Keep batch code as a string (e.g., "batch1")
-            break  # Stop once we find the user
-
-    if user_batch_code is None:
-        st.error("⚠️ No batch assigned for this user. Contact admin.")
-        st.stop()
-
-    # ✅ Step 2: Store batch code in session state
-    st.session_state.batch_code = user_batch_code  # Now stored correctly as a string
-
-    # ✅ Step 3: Check if user worksheet exists, else create it
     try:
         return spreadsheet.worksheet(user_id)
     except gspread.exceptions.WorksheetNotFound:
-        worksheet = spreadsheet.add_worksheet(title=user_id, rows="1000", cols="12")  # Adjust column count
+        worksheet = spreadsheet.add_worksheet(title=user_id, rows="1000", cols="10")
         worksheet.insert_row(
             ["user_id", 
              "text_index", 
              "full_text", 
              "debate_unit_id",
+
+             # Labels
              "answer",
              "stretch", 
              "evasion",
              "attack",
+             
+             #"dodge", 
+             #"omission",  # ! spørg pilot om det skal med
+             #"deflection", 
+             #"answer",
+             
              "other",
              "comment_field",
-             "timestamp",
-             "batch_code"],  # Added batch_code column
+             "timestamp"],
             index=1
         )
         return worksheet
+
+
 
 
 def get_annotated_texts(user_id):
@@ -113,8 +103,7 @@ def get_annotated_texts(user_id):
                                                          
                                                          "other",
                                                          "comment_field",
-                                                         "timestamp",
-                                                         "batch_code"])
+                                                         "timestamp"])
         return set(df_annotations["full_text"].tolist())
     return set()
 
@@ -401,8 +390,7 @@ if submit_button:
         
         other_text,
         comment_input,
-        datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        st.session_state.batch_code
+        datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     ]
 
     st.session_state.annotations.append(annotation_data)
