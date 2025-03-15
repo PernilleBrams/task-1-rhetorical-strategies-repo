@@ -40,7 +40,7 @@ gc = gspread.authorize(creds)
 def fetch_allowed_users():
     """Fetch allowed users from the 'allowed_users' tab in the connected Google Sheet."""
     spreadsheet = gc.open_by_key(SHEET_ID)
-    worksheet = spreadsheet.worksheet("allowed_users_CE")  
+    worksheet = spreadsheet.worksheet("allowed_users_Deception_Detection")  
     allowed_users = worksheet.col_values(1)  
     return set(allowed_users)
 
@@ -55,11 +55,18 @@ def get_user_worksheet(user_id):
             ["user_id", 
              "text_index", 
              "full_text", 
-             "stretch", 
-             "dodge", 
-             "omission", 
-             "deflection", 
+
+             # Labels
              "answer",
+             "stretch", 
+             "evasion",
+             "attack",
+             
+             #"dodge", 
+             #"omission",  # ! spørg pilot om det skal med
+             #"deflection", 
+             #"answer",
+             
              "other",
              "timestamp"],
             index=1
@@ -74,11 +81,17 @@ def get_annotated_texts(user_id):
         df_annotations = pd.DataFrame(data[1:], columns=["user_id", 
                                                          "text_index", 
                                                          "full_text", 
+                                                         
+                                                         "answer"
                                                          "stretch", 
-                                                         "dodge", 
-                                                         "omission", 
-                                                         "deflection", 
-                                                         "answer",
+                                                         "evasion",
+                                                         "attack",
+                                                         
+                                                         #"dodge", 
+                                                         #"omission", 
+                                                         #"deflection", 
+                                                         #"answer",
+                                                         
                                                          "other",
                                                          "timestamp"])
         return set(df_annotations["full_text"].tolist())
@@ -182,7 +195,8 @@ current_text = unannotated_texts[st.session_state.text_index]
 #st.markdown("## Retoriske strategier i politiske debatter")
 st.markdown("## Kan du identificere vores politikeres skjulte debatstrategier? 🏛️🤔🧑‍💻")
 st.markdown("##### Sådan bruges siden:")
-st.markdown("1) **Vælg en label** (Overdrivelse, Undvigelse, Udeladelse, Afledning, Svar (hvis ingen strategi bruges, men et reelt svar gives) eller Andet), **markér én eller flere ytringer, der passer til den label**, og tryk på **den blå update-knap** for at gemme dem.")
+#st.markdown("1) **Vælg en label** (Overdrivelse, Undvigelse, Udeladelse, Afledning, Svar (hvis ingen strategi bruges, men et reelt svar gives) eller Andet), **markér én eller flere ytringer, der passer til den label**, og tryk på **den blå update-knap** for at gemme dem.")
+st.markdown("1) **Vælg en label** (Svar, Overdrivelse, Undvigelse, Angreb eller Andet), **markér én eller flere ytringer, der passer til den label**, og tryk på **den blå update-knap** for at gemme dem.")
 st.markdown("2) Gentag trin 1 så mange gange, du føler er nødvendigt.")
 st.markdown("3) Når der ikke er mere relevant at markere i den viste tekst, så tryk på **Gem annotation**-knappen i bunden af siden for at gemme *alle* svar og gå videre til den næste dialog.")
 st.markdown("______")
@@ -200,7 +214,13 @@ st.markdown("""
 with st.expander("🔍 Klik her for at se lidt eksempler på, hvordan stategierne ser ud 🔍 "):
     st.markdown("""
     ### **📌 Label forklaringer & eksempler**
-    
+
+    ➕ **Svar (Answer)**  
+    _Definition_: Når en politiker faktisk besvarer spørgsmålet direkte og uden strategisk manipulation.  
+    _Eksempel_:  
+    **Opponent**: *"Vil I hæve skatten?"*  
+    **Proponent**: *"Ja, vi planlægger en mindre forhøjelse for at finansiere velfærd."*  
+
     ⬆️ **Overdrivelse (Stretch)**  
     _Definition_: Når en politiker forstærker eller overdriver en påstand uden at give præcise beviser.  
     _Eksempel_:  
@@ -212,24 +232,12 @@ with st.expander("🔍 Klik her for at se lidt eksempler på, hvordan stategiern
     _Eksempel_:  
     **Opponent**: *"Vil jeres parti hæve skatten?"*  
     **Proponent**: *"Det vigtigste er, at vi sikrer en stærk økonomi for fremtiden."*  
-
-    ⁒ **Udeladelse (Omission)**  
-    _Definition_: Når en vigtig del af informationen udelades for at ændre betydningen af et argument._  
-    _Eksempel:_  
-    **Opponent**: *"Jeres politik har ført til store tab af arbejdspladser!"*  
-    **Proponent**: *"Faktisk har vi skabt 50.000 nye job!"* _(Men uden at nævne, at 60.000 er mistet.)_  
     
-    ➡️ **Afledning (Deflection)**  
-    _Definition_: Når en politiker ændrer emnet for at undgå at svare direkte på et kritisk spørgsmål.  
-    _Eksempel_:  
-    **Opponent**: *"Har din regering fejlet med inflationen?"*  
-    **Proponent**: *"Lad os huske på, hvad oppositionen gjorde sidste gang de havde magten."*  
-
-    ➕ **Svar (Answer)**  
-    _Definition_: Når en politiker faktisk besvarer spørgsmålet direkte og uden strategisk manipulation.  
-    _Eksempel_:  
-    **Opponent**: *"Vil I hæve skatten?"*  
-    **Proponent**: *"Ja, vi planlægger en mindre forhøjelse for at finansiere velfærd."*  
+    ⚔️ **Angreb (Attack)**
+    _Definition_: Når en politiker undgår at svare på spørgsmålet og i stedet angriber modstanderen, journalisten eller en tredjepart. Dette kan ske gennem personangreb, nedgørende bemærkninger eller afledning via kritik af andre.
+    _Eksempel_:
+    **Opponent**: *"Hvorfor har din regering ikke indfriet sine løfter om bedre sundhedsvæsen?"*
+    **Proponent**: *"Det er vildt at høre dét fra et parti, der selv har skåret milliarder fra sundhedssektoren."*
 
     👀 **Andet (Other)**  
     _Definition_: Hvis en udtalelse ikke passer ind i de andre kategorier, men stadig er relevant.  
@@ -296,7 +304,10 @@ formatted_text = format_speaker_text(current_text)
 selections = label_select(
     body=formatted_text,
     #labels=["Stretch", "Dodge", "Omission", "Deflection", "Svar", "Andet"]
-    labels=["Overdrivelse", "Undvigelse", "Udeladelse", "Afledning", "Svar", "Andet"]
+    labels=["Svar", "Overdrivelse", "Undvigelse", "Angreb", "Andet"]
+            #"Udeladelse", 
+            #"Afledning", 
+            #"Svar", "Andet"]
 )
 
 # Display a little msg
@@ -329,22 +340,30 @@ submit_button = st.button("Gem annotation", disabled=submit_button_disabled)
 
 if submit_button:
     # Extract text per label from recorded selections
+    answer_text = " ".join([s.text for s in selection_data if 'Svar' in s.labels])
     stretch_text = " ".join([s.text for s in selection_data if 'Overdrivelse' in s.labels])
     dodge_text = " ".join([s.text for s in selection_data if 'Undvigelse' in s.labels])
-    omission_text = " ".join([s.text for s in selection_data if 'Udeladelse' in s.labels])
-    deflection_text = " ".join([s.text for s in selection_data if 'Afledning' in s.labels])
-    answer_text = " ".join([s.text for s in selection_data if 'Svar' in s.labels])
+    attack_text = " ".join([s.text for s in selection_data if 'Angreb' in s.labels])
+
+    #omission_text = " ".join([s.text for s in selection_data if 'Udeladelse' in s.labels])
+    #deflection_text = " ".join([s.text for s in selection_data if 'Afledning' in s.labels])
+    #answer_text = " ".join([s.text for s in selection_data if 'Svar' in s.labels])
+    
     other_text = " ".join([s.text for s in selection_data if 'Andet' in s.labels])
 
     annotation_data = [
         user_id,
         st.session_state.text_index,
         current_text,
+        
+        answer_test,
         stretch_text,
         dodge_text,
-        omission_text,
-        deflection_text,
-        answer_text,
+        attack_text,
+        
+        #omission_text,
+        #deflection_text,
+        
         other_text,
         datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     ]
