@@ -360,7 +360,7 @@ if submit_button:
         st.session_state.text_index,
         current_text,
         
-        answer_test,
+        answer_text,
         stretch_text,
         dodge_text,
         attack_text,
