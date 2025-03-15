@@ -46,7 +46,7 @@ def fetch_allowed_users():
     # Get users
     allowed_users = worksheet.col_values(1)  
     return set(allowed_users)
-
+    
 def get_user_worksheet(user_id):
     """Ensure each user has a personal worksheet and fetch batch code."""
     spreadsheet = gc.open_by_key(SHEET_ID)
