@@ -166,15 +166,6 @@ df_texts = pd.DataFrame(texts, columns=["text"])
 # ✅ Remove already annotated texts # herhen
 unannotated_texts = df_texts[~df_texts["text"].isin(st.session_state.annotated_texts)]["text"].tolist() # was text before
 
-# NEWCODE ✅ Ensure random order, but keep consistency across a session
-#if "unannotated_texts" not in st.session_state:
-#    random.shuffle(unannotated_texts)
-#    st.session_state.unannotated_texts = unannotated_texts  # Store shuffled order in session state
-# ✅ Shuffle only once per session, keeping session state intact
-if "unannotated_texts" not in st.session_state:
-    st.session_state.unannotated_texts = random.sample(unannotated_texts, len(unannotated_texts))  # Ensures shuffling once
-    st.session_state.text_index = 0  # Start fresh when new batch is loaded
-
 # ✅ Ensure `text_index` is initialized correctly
 if "text_index" not in st.session_state or st.session_state.text_index == -1:
     st.session_state.text_index = 0
