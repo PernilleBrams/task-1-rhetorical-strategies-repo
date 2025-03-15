@@ -245,9 +245,6 @@ with st.expander("🔍 Klik her for at se lidt eksempler på, hvordan stategiern
     _Definition_: Hvis en udtalelse ikke passer ind i de andre kategorier, men stadig er relevant.  
     """)
 
-
-# kommentarfelt under annotation boksen label-select, der gemmes som comment_text i sheetet
-
 #selections = label_select(
 #    body=current_text,
 #    labels=["Stretch", "Dodge", "Omission", "Deflection"]
@@ -338,7 +335,13 @@ for label, texts in formatted_selections.items():
 submit_button_disabled = len(selection_data) == 0
 
 # Add comment
-comment_text = st.text_area("Tilføj en kommentar (hvis du f.eks. er usikker eller bare har en kommentar til din annotering):")
+# Ensure comment_text is initialized in session state
+if "comment_text" not in st.session_state:
+    st.session_state.comment_text = ""
+
+# Add comment field with session state key
+comment_text = st.text_area("Tilføj en kommentar (hvis du f.eks. er usikker eller bare har en kommentar til din annotering):", 
+                            key="comment_text")
 
 # --- Submit button ---
 submit_button = st.button("Gem annotation", disabled=submit_button_disabled)
@@ -370,7 +373,7 @@ if submit_button:
         #deflection_text,
         
         other_text,
-        comment_text,
+        st.session_state.comment_text,  # Save comment
         datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     ]
 
@@ -381,6 +384,9 @@ if submit_button:
         threading.Thread(target=save_annotations, args=(user_id, st.session_state.annotations.copy()), daemon=True).start()
         st.session_state.annotations = []
 
+    # Clear comment field
+    st.session_state.comment_text = ""
+    
     # Move to the next text
     st.session_state.text_index += 1
     st.rerun()
