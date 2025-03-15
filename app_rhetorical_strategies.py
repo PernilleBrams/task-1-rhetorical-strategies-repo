@@ -165,16 +165,16 @@ if "user_id" not in st.session_state:
 #            st.rerun()
 #        else:
 #            st.sidebar.error("❌ Adgang nægtet: Dit bruger-ID er ikke autoriseret.")
-            else:
-                user_id = st.session_state.user_id
-                st.sidebar.success(f"✅ Du er logget ind som: **{user_id}**")
-            
-                if st.sidebar.button("Log ud"):
-                    if st.session_state.annotations:
-                        threading.Thread(target=save_annotations, args=(user_id, st.session_state.annotations), daemon=True).start()
-                        st.session_state.annotations = []
-                    st.session_state.clear()
-                    st.rerun()
+    else:
+        user_id = st.session_state.user_id
+        st.sidebar.success(f"✅ Du er logget ind som: **{user_id}**")
+    
+        if st.sidebar.button("Log ud"):
+            if st.session_state.annotations:
+                threading.Thread(target=save_annotations, args=(user_id, st.session_state.annotations), daemon=True).start()
+                st.session_state.annotations = []
+            st.session_state.clear()
+            st.rerun()
 
 # 🚨 Block annotation until user logs in
 if "user_id" not in st.session_state:
