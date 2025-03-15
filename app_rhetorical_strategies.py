@@ -138,43 +138,22 @@ if "user_id" not in st.session_state:
             st.session_state.user_id = user_id.strip()
             st.session_state.text_index = -1
             st.session_state.annotations = []
+            st.session_state.annotated_texts = get_annotated_texts(user_id)
             st.session_state.worksheet_ready = False
             st.session_state.finished = False
-            
-            # ✅ Initialize annotated_texts properly before calling get_annotated_texts
-            st.session_state.annotated_texts = set()  
-            
-            # ✅ Fetch and assign annotated texts
-            annotated_texts = get_annotated_texts(user_id)
-            st.session_state.annotated_texts = annotated_texts  # Ensure it's stored in session
-            
             st.rerun()
         else:
             st.sidebar.error("❌ Adgang nægtet: Dit bruger-ID er ikke autoriseret.")
+else:
+    user_id = st.session_state.user_id
+    st.sidebar.success(f"✅ Du er logget ind som: **{user_id}**")
 
-#if "user_id" not in st.session_state:
-#    user_id = st.sidebar.text_input("Indtast dit bruger-ID:")
-#    if st.sidebar.button("Log in") and user_id.strip():
-#        if user_id.strip() in st.session_state.ALLOWED_USERS:
-#            st.session_state.user_id = user_id.strip()
-#            st.session_state.text_index = -1
-#            st.session_state.annotations = []
-            st.session_state.annotated_texts = get_annotated_texts(user_id)
-#            st.session_state.worksheet_ready = False
-#            st.session_state.finished = False
-#            st.rerun()
-#        else:
-#            st.sidebar.error("❌ Adgang nægtet: Dit bruger-ID er ikke autoriseret.")
-    else:
-        user_id = st.session_state.user_id
-        st.sidebar.success(f"✅ Du er logget ind som: **{user_id}**")
-    
-        if st.sidebar.button("Log ud"):
-            if st.session_state.annotations:
-                threading.Thread(target=save_annotations, args=(user_id, st.session_state.annotations), daemon=True).start()
-                st.session_state.annotations = []
-            st.session_state.clear()
-            st.rerun()
+    if st.sidebar.button("Log ud"):
+        if st.session_state.annotations:
+            threading.Thread(target=save_annotations, args=(user_id, st.session_state.annotations), daemon=True).start()
+            st.session_state.annotations = []
+        st.session_state.clear()
+        st.rerun()
 
 # 🚨 Block annotation until user logs in
 if "user_id" not in st.session_state:
