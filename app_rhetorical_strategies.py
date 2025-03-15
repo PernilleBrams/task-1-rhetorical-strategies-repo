@@ -340,8 +340,8 @@ if "comment_text" not in st.session_state:
     st.session_state.comment_text = ""
 
 # Add comment field with session state key
-comment_text = st.text_area("Tilføj en kommentar (hvis du f.eks. er usikker eller bare har en kommentar til din annotering):", 
-                            key="comment_text")
+comment_text = st.text_area("Tilføj en kommentar (hvis du f.eks. er usikker eller bare har en kommentar til din annotering):")
+
 
 # --- Submit button ---
 submit_button = st.button("Gem annotation", disabled=submit_button_disabled)
@@ -358,7 +358,7 @@ if submit_button:
     #answer_text = " ".join([s.text for s in selection_data if 'Svar' in s.labels])
     
     other_text = " ".join([s.text for s in selection_data if 'Andet' in s.labels])
-
+    
     annotation_data = [
         user_id,
         st.session_state.text_index,
@@ -373,7 +373,7 @@ if submit_button:
         #deflection_text,
         
         other_text,
-        st.session_state.comment_text,  # Save comment
+        comment_text,  # Save comment
         datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     ]
 
@@ -385,8 +385,8 @@ if submit_button:
         st.session_state.annotations = []
 
     # Clear comment field
-    st.session_state.update({"comment_text": ""})
-    
+    comment_text = ""
+
     # Move to the next text
     st.session_state.text_index += 1
     st.rerun()
