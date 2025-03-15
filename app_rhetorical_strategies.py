@@ -385,7 +385,7 @@ if submit_button:
         st.session_state.annotations = []
 
     # Clear comment field
-    comment_text = ""
+    st.session_state["comment_text"] = ""
 
     # Move to the next text
     st.session_state.text_index += 1
