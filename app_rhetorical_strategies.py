@@ -39,15 +39,36 @@ gc = gspread.authorize(creds)
 
 # --- GOOGLE SHEETS FUNCTIONS ---
 def fetch_allowed_users():
-    """Fetch allowed users from the 'allowed_users' tab in the connected Google Sheet."""
+    """Fetch allowed users and from the 'allowed_users' tab in the connected Google Sheet."""
     spreadsheet = gc.open_by_key(SHEET_ID)
     worksheet = spreadsheet.worksheet("allowed_users_Deception_Detection")  
+    
+    # Get users
     allowed_users = worksheet.col_values(1)  
     return set(allowed_users)
 
 def get_user_worksheet(user_id):
-    """ Ensure each user has a personal worksheet. Create one if it doesn’t exist. """
+    """ Ensure each user has a personal worksheet. Fetch and store batch code for user. """
     spreadsheet = gc.open_by_key(SHEET_ID)
+    
+    # Step 1: Fetch user batch assignment from "allowed_users_Deception_Detection"
+    worksheet_users = spreadsheet.worksheet("allowed_users_Deception_Detection")
+    data = worksheet_users.get_all_values()  # Fetch all rows
+
+    user_batch_code = None
+    for row in data[1:]:  # Skip headers
+        if len(row) >= 2 and row[0].strip() == user_id:  # Match user_id in col 1
+            user_batch_code = int(row[1].strip()) if row[1].isdigit() else None
+            break  # Stop once we find the user
+
+    if user_batch_code is None:
+        st.error("⚠️ No batch assigned for this user. Contact admin.")
+        st.stop()
+
+    # ✅ Step 2: Store batch code in session state
+    st.session_state.batch_code = user_batch_code
+
+    # ✅ Step 3: Check if user worksheet exists, else create it
     try:
         return spreadsheet.worksheet(user_id)
     except gspread.exceptions.WorksheetNotFound:
@@ -57,24 +78,18 @@ def get_user_worksheet(user_id):
              "text_index", 
              "full_text", 
              "debate_unit_id",
-
-             # Labels
              "answer",
              "stretch", 
              "evasion",
              "attack",
-             
-             #"dodge", 
-             #"omission",  # ! spørg pilot om det skal med
-             #"deflection", 
-             #"answer",
-             
              "other",
              "comment_field",
-             "timestamp"],
+             "timestamp",
+            "batch_code"],
             index=1
         )
         return worksheet
+
 
 def get_annotated_texts(user_id):
     """ Fetch already annotated texts for the user. """
@@ -98,7 +113,8 @@ def get_annotated_texts(user_id):
                                                          
                                                          "other",
                                                          "comment_field",
-                                                         "timestamp"])
+                                                         "timestamp",
+                                                         "batch_code"])
         return set(df_annotations["full_text"].tolist())
     return set()
 
@@ -385,7 +401,8 @@ if submit_button:
         
         other_text,
         comment_input,
-        datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        st.session_state.batch_code
     ]
 
     st.session_state.annotations.append(annotation_data)
