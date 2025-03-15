@@ -339,12 +339,12 @@ submit_button_disabled = len(selection_data) == 0
 if "comment_text" not in st.session_state:
     st.session_state.comment_text = ""
 
-# Add comment field with session state key
+# Add comment field with session value
 comment_text = st.text_area(
     "Tilføj en kommentar (hvis du f.eks. er usikker eller bare har en kommentar til din annotering):",
-    value=st.session_state.comment_text,  # Ensure value is linked to session state
-    key="comment_text"  # This ensures that Streamlit updates session state
-)
+    value=st.session_state.comment_text,
+)  # ⚠️ No key, directly using `value`
+
 
 # --- Submit button ---
 submit_button = st.button("Gem annotation", disabled=submit_button_disabled)
