@@ -217,8 +217,7 @@ current_text = unannotated_texts[st.session_state.text_index]
 #st.markdown("## Retoriske strategier i politiske debatter")
 st.markdown("## Kan du identificere vores politikeres skjulte debatstrategier? 🏛️🤔🧑‍💻")
 st.markdown("##### Sådan bruges siden:")
-#st.markdown("1) **Vælg en label** (Overdrivelse, Undvigelse, Udeladelse, Afledning, Svar (hvis ingen strategi bruges, men et reelt svar gives) eller Andet), **markér én eller flere ytringer, der passer til den label**, og tryk på **den blå update-knap** for at gemme dem.")
-st.markdown("1) **Vælg en label** (Svar, Overdriver, Undvigelse/Udenomssnak, Selv-promovering/Personlig anekdote, Angriber/Provokerer eller Andet), **markér én eller flere ytringer, der passer til den label**, og tryk på **den blå update-knap** for at gemme dem.")
+st.markdown("1) **Vælg en label** (Svar, Overdriver, Undvigelse/Udenomssnak, Selv-promovering/Personlig anekdote, Angren/Provokation eller Andet), **markér én eller flere ytringer, der passer til den label**, og tryk på **den blå update-knap** for at gemme dem.")
 st.markdown("2) Gentag trin 1 så mange gange, du føler er nødvendigt.")
 st.markdown("3) Når der ikke er mere relevant at markere i den viste tekst, så tryk på **Gem annotation**-knappen i bunden af siden for at gemme *alle* svar og gå videre til den næste dialog.")
 st.markdown("______")
@@ -242,27 +241,58 @@ with st.expander("🔍 Klik her for at se lidt eksempler på, hvordan stategiern
     _Eksempel_:  
     **Spørger**: *"Vil I hæve skatten?"*  
     **Ordfører**: *"Ja, vi planlægger en mindre forhøjelse for at finansiere velfærd."*  
+    🔹 **Inkluderer**:
+    - Direkte svar uden strategisk afvigelse.
+    - Brug af fakta, holdninger, eller argumenter, der konkret adresserer spørgsmålet.
 
     ⬆️ **Overdrivelse (Stretch)**  
     _Definition_: Når en politiker forstærker eller overdriver en påstand uden at give præcise beviser.  
     _Eksempel_:  
     **Spørger**: *"Jeres politik har ført til stigende arbejdsløshed og økonomisk krise!"*  
     **Ordfører**: *"Tværtimod. Vi har skabt den største økonomiske vækst i historien."*  
+    🔹 **Inkluderer**:
+    - Dramatisering eller overdrivelse af fakta.
+    - Påstande uden konkret evidens.
+    - Overgeneraliseringer à la *“Vi er de bedste i verden til dette”*.
 
-    ↔️ **Undvigelse (Dodge)**  
-    _Definition_: Når en politiker undgår at svare direkte på et spørgsmål og i stedet taler udenom.  
+    ↔️ **Undvigelse / Udenomssnak (Dodge)**  
+    _Definition_: Når en politiker taler udenom og undgår at svare direkte på et spørgsmål, eller helt undgår at forholde sig til det.  
     _Eksempel_:  
     **Spørger**: *"Vil jeres parti hæve skatten?"*  
     **Ordfører**: *"Det vigtigste er, at vi sikrer en stærk økonomi for fremtiden."*  
-    
-    ⚔️ **Angreb (Attack)**
-    _Definition_: Når en politiker undgår at svare på spørgsmålet og i stedet angriber modstanderen, journalisten eller en tredjepart. Dette kan ske gennem personangreb, nedgørende bemærkninger eller afledning via kritik af andre.
-    _Eksempel_:
-    **Spørger**: *"Hvorfor har din regering ikke indfriet sine løfter om bedre sundhedsvæsen?"*
-    **Ordfører**: *"Det er vildt at høre dét fra et parti, der selv har skåret milliarder fra sundhedssektoren."*
+    🔹 **Inkluderer**:
+    - Emneskift uden at besvare spørgsmålet.
+    - Vage eller uforpligtende udsagn.
+    - Besvarelse uden konkrete detaljer.
+
+    ⭐ **Selvpromovering / Personlig anekdote (Self-promotion / Personal Anecdote)**  
+    _Definition_: Når en politiker taler om sine egne erfaringer, bedrifter eller værdier i stedet for at svare direkte på spørgsmålet. Dette kan bruges til at styrke troværdighed, undgå at tage stilling eller skabe en følelsesmæssig forbindelse til publikum.  
+    _Eksempel_:  
+    **Spørger**: *"Hvordan vil du tackle ungdomsarbejdsløshed?"*  
+    **Ordfører**: *"Da jeg var ung, arbejdede jeg tre jobs for at klare mig. Jeg ved, hvor svært det kan være, og det er derfor, vi fokuserer på at give unge bedre muligheder."*  
+    🔹 **Inkluderer**:
+    - Brug af personlige anekdoter i stedet for at svare direkte.
+    - Fokus på egne præstationer frem for politik.
+    - Implicit selvros, som er sådan lidt *“Jeg har altid kæmpet for denne sag”*-agtige.
+
+    ⚔️ **Angreb / Provokation (Attack)**  
+    _Definition_: Når en politiker angriber modstanderen. Dette kan ske gennem provokerende sprog, sarkasme, personangreb, nedgørende bemærkninger eller afledning via kritik.  
+    _Eksempel_:  
+    **Spørger**: *"Hvorfor har din regering ikke indfriet sine løfter om bedre sundhedsvæsen?"*  
+    **Ordfører**: *"Det er vildt at høre dét fra et parti, der selv har skåret milliarder fra sundhedssektoren."*  
+    🔹 **Inkluderer**:
+    - Direkte kritik af modstanderen i stedet for at svare på spørgsmålet.
+    - Sarkastiske kommentarer eller provokationer.
+    - Konfliktoptrappende sprog eller retoriske angreb.
+    - Nedgørelse af modstanderen eller deres parti.
 
     👀 **Andet (Other)**  
     _Definition_: Hvis en udtalelse ikke passer ind i de andre kategorier, men stadig er relevant.  
+    🔹 **Inkluderer**:
+    - Udtalelser, der ikke indeholder nogen af de ovenstående strategier.
+    - Tekniske forklaringer eller neutral information.
+    - Meget vage eller uklare svar.
+
     """)
 
 #selections = label_select(
@@ -326,9 +356,9 @@ selections = label_select(
     #labels=["Stretch", "Dodge", "Omission", "Deflection", "Svar", "Andet"]
     labels=["Svar", 
             "Overdrivelse", 
-            "Undvigelse", 
-            "Selv-promovering",
-            "Angreb", 
+            "Undvigelse/Udenomssnak", 
+            "Selv-promovering/Personlig anekdote",
+            "Angreb/Provokation", 
             "Andet"]
             #"Udeladelse", 
             #"Afledning", 
@@ -381,9 +411,9 @@ if submit_button:
     # Extract text per label from recorded selections
     answer_text = " ".join([s.text for s in selection_data if 'Svar' in s.labels])
     stretch_text = " ".join([s.text for s in selection_data if 'Overdrivelse' in s.labels])
-    dodge_text = " ".join([s.text for s in selection_data if 'Undvigelse' in s.labels])
-    self_promotion_text = " ".join([s.text for s in selection_data if 'Selv-promovering' in s.labels])
-    attack_text = " ".join([s.text for s in selection_data if 'Angreb' in s.labels])
+    dodge_text = " ".join([s.text for s in selection_data if 'Undvigelse/Udenomssnak' in s.labels])
+    self_promotion_text = " ".join([s.text for s in selection_data if 'Selv-promovering/Personlig anekdote' in s.labels])
+    attack_text = " ".join([s.text for s in selection_data if 'Angreb/Provokation' in s.labels])
 
     #omission_text = " ".join([s.text for s in selection_data if 'Udeladelse' in s.labels])
     #deflection_text = " ".join([s.text for s in selection_data if 'Afledning' in s.labels])
