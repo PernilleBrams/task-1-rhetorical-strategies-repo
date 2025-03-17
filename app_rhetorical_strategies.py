@@ -53,7 +53,7 @@ def get_user_worksheet(user_id):
     try:
         return spreadsheet.worksheet(user_id)
     except gspread.exceptions.WorksheetNotFound:
-        worksheet = spreadsheet.add_worksheet(title=user_id, rows="1000", cols="10")
+        worksheet = spreadsheet.add_worksheet(title=user_id, rows="1000", cols="12")
         worksheet.insert_row(
             ["user_id", 
              "text_index", 
@@ -64,6 +64,7 @@ def get_user_worksheet(user_id):
              "answer",
              "stretch", 
              "evasion",
+             "self_promotion",
              "attack",
              
              #"dodge", 
@@ -94,6 +95,7 @@ def get_annotated_texts(user_id):
                                                          "answer",
                                                          "stretch", 
                                                          "evasion",
+                                                         "self_promotion",
                                                          "attack",
                                                          
                                                          #"dodge", 
@@ -216,7 +218,7 @@ current_text = unannotated_texts[st.session_state.text_index]
 st.markdown("## Kan du identificere vores politikeres skjulte debatstrategier? 🏛️🤔🧑‍💻")
 st.markdown("##### Sådan bruges siden:")
 #st.markdown("1) **Vælg en label** (Overdrivelse, Undvigelse, Udeladelse, Afledning, Svar (hvis ingen strategi bruges, men et reelt svar gives) eller Andet), **markér én eller flere ytringer, der passer til den label**, og tryk på **den blå update-knap** for at gemme dem.")
-st.markdown("1) **Vælg en label** (Svar, Overdrivelse, Undvigelse, Angreb eller Andet), **markér én eller flere ytringer, der passer til den label**, og tryk på **den blå update-knap** for at gemme dem.")
+st.markdown("1) **Vælg en label** (Svar, Overdriver, Undvigelse/Udenomssnak, Selv-promovering/Personlig anekdote, Angriber/Provokerer eller Andet), **markér én eller flere ytringer, der passer til den label**, og tryk på **den blå update-knap** for at gemme dem.")
 st.markdown("2) Gentag trin 1 så mange gange, du føler er nødvendigt.")
 st.markdown("3) Når der ikke er mere relevant at markere i den viste tekst, så tryk på **Gem annotation**-knappen i bunden af siden for at gemme *alle* svar og gå videre til den næste dialog.")
 st.markdown("______")
@@ -322,7 +324,12 @@ debate_unit_id, formatted_text = format_speaker_text(current_text)
 selections = label_select(
     body=formatted_text,
     #labels=["Stretch", "Dodge", "Omission", "Deflection", "Svar", "Andet"]
-    labels=["Svar", "Overdrivelse", "Undvigelse", "Angreb", "Andet"]
+    labels=["Svar", 
+            "Overdrivelse", 
+            "Undvigelse", 
+            "Selv-promovering",
+            "Angreb", 
+            "Andet"]
             #"Udeladelse", 
             #"Afledning", 
             #"Svar", "Andet"]
@@ -375,6 +382,7 @@ if submit_button:
     answer_text = " ".join([s.text for s in selection_data if 'Svar' in s.labels])
     stretch_text = " ".join([s.text for s in selection_data if 'Overdrivelse' in s.labels])
     dodge_text = " ".join([s.text for s in selection_data if 'Undvigelse' in s.labels])
+    self_promotion_text = " ".join([s.text for s in selection_data if 'Selv-promovering' in s.labels])
     attack_text = " ".join([s.text for s in selection_data if 'Angreb' in s.labels])
 
     #omission_text = " ".join([s.text for s in selection_data if 'Udeladelse' in s.labels])
@@ -392,6 +400,7 @@ if submit_button:
         answer_text,
         stretch_text,
         dodge_text,
+        self_promotion_text,
         attack_text,
         
         #omission_text,
