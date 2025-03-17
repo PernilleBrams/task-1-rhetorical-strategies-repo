@@ -217,7 +217,7 @@ current_text = unannotated_texts[st.session_state.text_index]
 #st.markdown("## Retoriske strategier i politiske debatter")
 st.markdown("## Kan du identificere vores politikeres skjulte debatstrategier? 🏛️🤔🧑‍💻")
 st.markdown("##### Sådan bruges siden:")
-st.markdown("1) **Vælg en label** (Svar, Overdriver, Undvigelse/Udenomssnak, Selv-promovering/Personlig anekdote, Angren/Provokation eller Andet), **markér én eller flere ytringer, der passer til den label**.")
+st.markdown("1) **Vælg et label** (Svar, Overdriver, Undvigelse/Udenomssnak, Selv-promovering/Personlig anekdote, Angren/Provokation eller Andet), **markér én eller flere ytringer, der passer til det label**.")
 st.markdown("2) Tryk på **den blå update-knap** for at opdatere siden.")
 st.markdown("3) Gentag trin 1-2 så mange gange, du føler er nødvendigt.")
 st.markdown("4) Når der ikke er mere relevant at markere i teksten, så tryk på **Gem annotation**-knappen i bunden af siden for at gemme *alle* svar og gå videre til den næste dialog.")
