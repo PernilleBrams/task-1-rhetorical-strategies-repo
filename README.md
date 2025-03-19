@@ -92,6 +92,6 @@ annotation-tool/
 
 - **Batch Saving**: Annotations are pushed to Google Sheets in increments of 5. If you have partially annotated fewer than 5 items, they will still save when you finish or log out.  
 - **Resuming Work**: Your progress is tracked by Streamlit’s session state and by skipping previously annotated text.  
-- **Light Theme**: By design, the tool forces a white background for consistent readability.  
-- **User-Specific Data**: Each user’s data is located in `/data/clean/<USER_ID>`.  
+- **Light Theme**: By design, the tool forces a white background for consistent readability. If your browser's setting is forced dark-mode, you might have to click settings in the Streamlit app and turn on Light mode.
+- **User-Specific Data**: Each user’s data to be annotated is located in `/data/clean/<USER_ID>`.  
 - **Expandability**: Easily customize rhetorical strategies, comment usage, or classification logic by editing labels and prompts in `app.py`.
