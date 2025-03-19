@@ -410,17 +410,17 @@ submit_button = st.button("Gem annotation", disabled=submit_button_disabled)
 
 if submit_button:
     # Extract text per label from recorded selections
-    answer_text = " ".join([s.text for s in selection_data if 'Svar' in s.labels])
-    stretch_text = " ".join([s.text for s in selection_data if 'Overdrivelse' in s.labels])
-    dodge_text = " ".join([s.text for s in selection_data if 'Undvigelse/Udenomssnak' in s.labels])
-    self_promotion_text = " ".join([s.text for s in selection_data if 'Selv-promovering/Personlig anekdote' in s.labels])
-    attack_text = " ".join([s.text for s in selection_data if 'Angreb/Provokation' in s.labels])
+    answer_text = ";".join([s.text for s in selection_data if 'Svar' in s.labels])
+    stretch_text = ";".join([s.text for s in selection_data if 'Overdrivelse' in s.labels])
+    dodge_text = ";".join([s.text for s in selection_data if 'Undvigelse/Udenomssnak' in s.labels])
+    self_promotion_text = ";".join([s.text for s in selection_data if 'Selv-promovering/Personlig anekdote' in s.labels])
+    attack_text = ";".join([s.text for s in selection_data if 'Angreb/Provokation' in s.labels])
 
     #omission_text = " ".join([s.text for s in selection_data if 'Udeladelse' in s.labels])
     #deflection_text = " ".join([s.text for s in selection_data if 'Afledning' in s.labels])
     #answer_text = " ".join([s.text for s in selection_data if 'Svar' in s.labels])
     
-    other_text = " ".join([s.text for s in selection_data if 'Andet' in s.labels])
+    other_text = ";".join([s.text for s in selection_data if 'Andet' in s.labels])
     
     annotation_data = [
         user_id,
